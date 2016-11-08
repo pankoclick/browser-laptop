@@ -38,8 +38,10 @@ module.exports.getExtensionsPath = function (extensionDir) {
 
 module.exports.getIndexHTML = function () {
   return process.env.NODE_ENV === 'development'
-    ? module.exports.fileUrl(path.resolve(__dirname, '..', '..') + '/app/extensions/brave/index-dev.html')
-    : module.exports.fileUrl(path.resolve(__dirname, '..', '..') + '/app/extensions/brave/index.html')
+    // ? module.exports.getAppUrl('index-dev.html')
+    // : module.exports.getAppUrl('index.html')
+    ? module.exports.fileUrl(path.resolve(__dirname, '..', '..') + '/app/extensions/brave/index-dev.html').replace('file://', 'chrome://brave')
+    : module.exports.fileUrl(path.resolve(__dirname, '..', '..') + '/app/extensions/brave/index.html').replace('file://', 'chrome://brave')
 }
 
 /**

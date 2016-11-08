@@ -46,6 +46,9 @@ function config () {
     resolve: {
       extensions: ['', '.js', '.jsx']
     },
+    externals: {
+      'electron': 'chrome'
+    },
     plugins: [
       new WebpackNotifierPlugin({title: 'Brave-' + env}),
       new webpack.IgnorePlugin(/^\.\/stores\/appStore$/),
@@ -60,6 +63,7 @@ function config () {
       })
     ],
     node: {
+      process: false,
       __filename: true,
       __dirname: true
     }
@@ -69,7 +73,8 @@ function config () {
 function development () {
   var dev = config()
   dev.devServer = {
-    publicPath: 'http://localhost:' + port + '/gen/'
+    publicPath: 'http://localhost:' + port + '/gen/',
+    headers: { 'Access-Control-Allow-Origin': '*' }
   }
   return dev
 }
@@ -97,7 +102,7 @@ function merge (config, env) {
 
 var app = {
   name: 'app',
-  target: 'electron',
+  target: 'web',
   entry: ['./js/entry.js'],
   output: {
     path: path.resolve(__dirname, 'app', 'extensions', 'brave', 'gen'),
