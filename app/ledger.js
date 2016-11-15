@@ -77,6 +77,8 @@ const clientOptions = { debugP: process.env.LEDGER_DEBUG,
                         server: process.env.LEDGER_SERVER_URL
                       }
 
+var doneTimer
+
 /*
  * publisher globals
  */
@@ -200,12 +202,13 @@ var init = () => {
     appDispatcher.register(doAction)
     initialize(getSetting(settings.PAYMENTS_ENABLED))
 
-    setInterval(doneWriter, 1 * msecs.hour)
+    doneTimer = setInterval(doneWriter, 1 * msecs.hour)
   } catch (ex) { console.log('ledger.js initialization failed: ' + ex.toString() + '\n' + ex.stack) }
 }
 
 var quit = () => {
   visit('NOOP', underscore.now(), null)
+  clearInterval(doneTimer)
   doneWriter()
 }
 
