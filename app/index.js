@@ -431,7 +431,7 @@ app.on('ready', () => {
     AdInsertion.init()
 
     if (!loadedPerWindowState || loadedPerWindowState.length === 0) {
-      if (!CmdLine.newWindowURL) {
+      if (!CmdLine.newWindowURL()) {
         appActions.newWindow()
       }
     } else {
@@ -454,9 +454,9 @@ app.on('ready', () => {
       appActions.changeSetting(settings.IS_DEFAULT_BROWSER, isDefaultBrowser)
     }
 
-    if (CmdLine.newWindowURL) {
+    if (CmdLine.newWindowURL()) {
       appActions.newWindow(Immutable.fromJS({
-        location: CmdLine.newWindowURL
+        location: CmdLine.newWindowURL()
       }))
     }
 
