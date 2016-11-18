@@ -394,7 +394,8 @@ eventStore.addChangeListener(() => {
 
   if ((!synopsis) || (!util.isArray(info))) return
 
-  info.forEach((page) => {
+// NB: in theory we have already seen every element in info except for (perhaps) the last one...
+  underscore.rest(info, info.length - 1).forEach((page) => {
     var entry, faviconURL, publisher, siteSetting
     var location = page.url
 
